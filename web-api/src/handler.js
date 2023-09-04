@@ -5,7 +5,7 @@ import { DEFAULT_HEADER } from "./util/index.js";
 
 const allRoutes = {
   "/heroes:get": async (req, res) => {
-    throw new Error("Not implemented");
+    // throw new Error("Not implemented");
 
     res.write("HEROES GET");
     res.end();
@@ -39,11 +39,12 @@ const handleError = (res) => {
     res.writeHead(500);
     res.write(
       JSON.stringify({
-        error: error.message,
+        errorS: error.message,
+        status: 500,
       })
     );
 
-    return res.end();
+    return res.end(); //?
   };
 };
 export default handler;
