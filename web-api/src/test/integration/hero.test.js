@@ -8,7 +8,7 @@ test("Hero integration test", async (t) => {
 
   const { server } = await import("../../../src/index.js"); // dynamic import
 
-  const testServerAddress = `http://localhost:${testPORT}`;
+  const testServerAddress = `http://localhost:${testPORT}/heroes`;
 
   await t.test("It should create hero", async (t) => {
     const data = {
@@ -17,7 +17,7 @@ test("Hero integration test", async (t) => {
       power: "Rich",
     };
 
-    fetch(testServerAddress, {
+    const request = await fetch(testServerAddress, {
       method: "POST",
       body: JSON.stringify(data),
     });
@@ -27,6 +27,17 @@ test("Hero integration test", async (t) => {
       request.headers.get("content-type"),
       "application/json"
     );
+
+    assert.strictEqual(request.status, 201);
+
+    const result = await request.json();
+    assert.deepStrictEqual(
+      result.success,
+      "User created successfully",
+      "It should return a valid message"
+    );
+
+    assert.ok(result.id.length > 30, "It should be a valid UUID");
   });
 
   await promisify(server.close.bind(server))();

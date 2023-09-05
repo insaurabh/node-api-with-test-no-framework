@@ -2,14 +2,14 @@
 // between routes and server
 import { parse } from "node:url";
 import { DEFAULT_HEADER } from "./util/index.js";
+import { routes } from "./routes/heroRoutes.js";
 
+const heroRoutes = routes({
+  heroService: {},
+});
 const allRoutes = {
-  "/heroes:get": async (req, res) => {
-    // throw new Error("Not implemented");
+  ...heroRoutes,
 
-    res.write("HEROES GET");
-    res.end();
-  },
   default: (req, res) => {
     res.writeHead(404, DEFAULT_HEADER);
     res.write("Hello, You are on wrong route");
@@ -47,4 +47,5 @@ const handleError = (res) => {
     return res.end(); //?
   };
 };
+
 export default handler;
