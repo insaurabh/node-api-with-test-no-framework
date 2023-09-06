@@ -7,6 +7,7 @@ import { routes } from "./routes/heroRoutes.js";
 const heroRoutes = routes({
   heroService: {},
 });
+
 const allRoutes = {
   ...heroRoutes,
 
